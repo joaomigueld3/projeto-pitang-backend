@@ -59,8 +59,23 @@ class PatientController{
       }
       }
 
-      async update(){
-          
+      async update(request, response) {
+        const id = request.params.id;
+        const { name, email, birthDate } = request.body;
+    
+        const patient = await PatientModel.findByIdAndUpdate(
+          id,
+          {
+            name,
+            email,
+            birthDate,
+            },
+          {
+            new: true,
+          }
+        );
+    
+        response.send(patient);
       }
 }
 
