@@ -5,9 +5,10 @@ import dotenv from "dotenv";
 import cors from "cors";
 import helmet from "helmet";
 
+
 dotenv.config({path:'.env.example'});
 
-import UserRouter from "./router/UserRouter.js";
+import PatientRouter from "./router/PatientRouter.js";
 
 const {DATABASE_URL, PORT} = process.env;
 mongoose
@@ -27,4 +28,8 @@ app.use(helmet());
 app.use(express.json());
 app.use(morgan("dev"));
 
-app.use(UserRouter);
+app.use(PatientRouter);
+
+app.listen(PORT, () => {
+    console.log(`Server running on PORT ${PORT}`);
+  });
