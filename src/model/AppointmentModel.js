@@ -8,7 +8,7 @@ const AppointmentSchema = new mongoose.Schema(
     birthDate: {type: String,required: true},
     appDate:{ type: String, required: true },
     appTime:{ type: String, required: true },
-    isSolved:Boolean,
+    isSolved:{type: Boolean, default:false},
     phones: [String],
     },
   {
@@ -16,6 +16,6 @@ const AppointmentSchema = new mongoose.Schema(
   }
 );
 
-const AppointmentntModel = mongoose.model("appointment", AppointmentSchema);
+const AppointmentModel = mongoose.model("appointment", AppointmentSchema);
 
-export default AppointmentntModel;
+export default AppointmentModel;

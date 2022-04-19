@@ -1,12 +1,12 @@
-import AppointmentntModel from "../model/AppointmentModel";
+import AppointmentModel from "../model/AppointmentModel.js";
 
 class AppointmentController{
 
     async index(request,response){        
         try{
-            const app = await AppointmentntModel.find();
+            const app = await AppointmentModel.find();
             if(app.length==0){
-                return response.status(404).json({message:"no appointments found in database"});
+                return response.status(404).json({message:"No appointments found in database"});
             }
             else{
                 return response.send(app);
@@ -19,12 +19,12 @@ class AppointmentController{
     }
 
     async getOne(request,response){
-        const email = request.params.email;
+        const id = request.params.id;
 
             try{
-                const app = await AppointmentntModel.findByOne(email);
+                const app = await AppointmentModel.findById(id);
                 if(app){
-                    return response.send(app);
+                    return response.status(200).send(app);
                 }
                 else{
                     return response.status(404).json({message:"appointment not found!"});
@@ -35,12 +35,22 @@ class AppointmentController{
             }
     }
     async store(request,response){
-        const{name, cpf, email, birtDate, appDate,appTime, phones,isSolved}=request.body;
+        const{name, cpf, email, birthDate, appDate,appTime, phones}=request.body;
 
             try{
-                const app = await AppointmentntModel.findByOne(email);
-                if(!app){
-                    //create one
+                const verifyApp = await AppointmentModel.findOne({email});
+                if(!verifyApp){
+                    const app = await AppointmentModel.create({
+                        name,
+                        cpf,
+                        email,
+                        birthDate,
+                        appDate,
+                        appTime,
+                        phones,
+                        isSolved:false,
+                    });
+                   return response.status(200).send({message:"Appointment registred with success", app});
                 }else{
                     return response.status(404).json({message:"email already being used"});
                 }
@@ -49,11 +59,46 @@ class AppointmentController{
                 response.status(400).send({ message: "An unexpected error happened" });
         }
     }
-    async remove(){
+    async remove(request,response){
+        const id = request.params.id;
+        try{
+            const verifyApp = await AppointmentModel.findById(id);
+            if(verifyApp){
+                await verifyApp.remove();
+                return response.status(200).send({ message: "Appointment removed" });
+            }else{
+                response.status(404).send({ message: "Appointment not found, therefore can't be removed" });
+            }
 
+        }catch(error){
+            console.log(error.message);
+            response.status(400).send({ message: "An unexpected error happened" });
+        }
     }
-    async update(){
-
+    async update(request,response){
+        const id=request.params.id;
+        const{name, cpf, email,isSolved}=request.body;
+        try{
+            const verifyApp = await AppointmentModel.findById(id);
+            if(verifyApp){
+                verifyApp = await AppointmentModel.findByIdAndUpdate(id,
+                    {
+                        name, 
+                        cpf,
+                        email,
+                        isSolved,
+                    },
+                    {
+                        new:true,
+                    });
+                    return response.status(200).send({message:"Appointment updated with success",verifyApp});
+            }   else{
+                    response.status(404).send({ message: "Appointment not found, therefore can't be updated" });
+            }
+        }catch(error){
+            console.log(error.message);
+            response.status(400).send({ message: "An unexpected error happened" });
+        }
     }
 }
 
