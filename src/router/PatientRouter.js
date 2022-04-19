@@ -6,10 +6,10 @@ const patientController = new PatientController();
 const router = express.Router();
 
 
-router.get("/api/patients", patientController.index);
-router.get("/api/patients/:id", patientController.getOne);
-router.post("/api/patients", patientController.store);
-router.put("/api/patients/:id", patientController.update);
-router.delete("/api/patients/:id", patientController.remove);
+router.get("/api/patient", patientController.index);
+router.get("/api/patient/:id", patientController.getOne);
+router.post("/api/patient", patientController.store);
+router.put("/api/patient/:id", patientController.update);
+router.delete("/api/patient/:id", patientController.remove);
 
 export default router;

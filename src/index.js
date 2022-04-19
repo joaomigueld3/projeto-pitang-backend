@@ -9,6 +9,7 @@ import helmet from "helmet";
 dotenv.config({path:'.env.example'});
 
 import PatientRouter from "./router/PatientRouter.js";
+import AppointmentRouter from "./router/AppointmentRouter.js"
 
 const {DATABASE_URL, PORT} = process.env;
 mongoose
@@ -28,7 +29,7 @@ app.use(helmet());
 app.use(express.json());
 app.use(morgan("dev"));
 
-app.use(PatientRouter);
+app.use(AppointmentRouter);
 
 app.listen(PORT, () => {
     console.log(`Server running on PORT ${PORT}`);
