@@ -40,6 +40,19 @@ class AppointmentController{
             try{
                 const verifyApp = await AppointmentModel.findOne({email});
                 if(!verifyApp){
+                    const checkDay = await AppointmentModel.findOne({appDate});
+                    
+                        //if someone already booked an app this day
+                        if(checkDay){
+                            const appTimeNew=checkDay.appTime;
+                            console.log(appTime);
+                            console.log(appTimeNew);
+                            if(appTime===appTimeNew){
+                                return response.status(400).send(
+                                    {message:"another appointment is already booked for this day and time"});
+                            }
+                        }
+                    
                     const app = await AppointmentModel.create({
                         name,
                         cpf,
