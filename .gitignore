@@ -6,3 +6,6 @@
 **/**/.env.production.local
 **/**/.env.local
 **/**/.env.example
+./router/PatientRouter.js
+./controller/PatientController.js
+./model/PatientModel.js
