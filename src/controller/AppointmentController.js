@@ -50,7 +50,7 @@ class AppointmentController{
                         phones,
                         isSolved:false,
                     });
-                   return response.status(200).send({message:"Appointment registred with success", app});
+                    response.status(200).send({message:"Appointment registred with success", app});
                 }else{
                     return response.status(404).json({message:"email already being used"});
                 }
@@ -77,23 +77,20 @@ class AppointmentController{
     }
     async update(request,response){
         const id=request.params.id;
-        const{name, cpf, email,isSolved}=request.body;
+        const{isSolved}=request.body;
         try{
             const verifyApp = await AppointmentModel.findById(id);
             if(verifyApp){
-                verifyApp = await AppointmentModel.findByIdAndUpdate(id,
+               const app = await AppointmentModel.findByIdAndUpdate(id,
                     {
-                        name, 
-                        cpf,
-                        email,
                         isSolved,
                     },
                     {
                         new:true,
                     });
-                    return response.status(200).send({message:"Appointment updated with success",verifyApp});
+                    return response.status(200).send({message:"Appointment updated with success",app});
             }   else{
-                    response.status(404).send({ message: "Appointment not found, therefore can't be updated" });
+                   return response.status(404).send({ message: "Appointment not found, therefore can't be updated" });
             }
         }catch(error){
             console.log(error.message);
