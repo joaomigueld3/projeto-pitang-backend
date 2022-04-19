@@ -4,7 +4,7 @@ const PatientSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true },
-    birthDate: Date,
+    birthDate: String,
     
     },
   {
@@ -12,6 +12,6 @@ const PatientSchema = new mongoose.Schema(
   }
 );
 
-const PatientModel = mongoose.model("Patient", PatientSchema);
+const PatientModel = mongoose.model("patient", PatientSchema);
 
 export default PatientModel;
