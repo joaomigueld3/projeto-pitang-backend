@@ -44,7 +44,9 @@ class AppointmentController{
                     
                         //if someone already booked an app this day
                         if(checkDay){
+                            console.log(checkDay);
                             const appTimeNew=checkDay.appTime;
+                            console.log(checkDay.appTime)
                             console.log(appTime);
                             console.log(appTimeNew);
                             if(appTime===appTimeNew){
@@ -69,7 +71,7 @@ class AppointmentController{
                 }
             }catch(error){
                 console.log(error.message);
-                response.status(400).send({ message: "An unexpected error happened" });
+                response.status(400).send({message: "An unexpected error happened" });
         }
     }
     async remove(request,response){
