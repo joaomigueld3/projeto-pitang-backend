@@ -2,16 +2,16 @@ import mongoose from "mongoose";
 
 const AppointmentSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
-    cpf:{type: [String], required: true},
-    email: { type: String, required: true },
-    birthDate: {type: Date,required: true},
-    appDate:{ type: String, required: true },
+    name: { type: String, required: true, maxlength: 50, message:'Max length accepted for NAME is 50' },
+    cpf:{type: String, required: true, minlength:11, maxlength:11 , error: 'CPF must be have exactly 11 characters'},
+    email: { type: String, required: true, maxlength:50, message:'Max length accepted for EMAIL is 50' },
+    birthDate: {type: Date, required: true, max:Date.now()},
+    appDate:{ type: String, required: true, minlength:10,maxlength:10, message:'Appointment Date must be in th format 2022-04-01' },
     appTime:{ type: String, enum:["8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30",
   "13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30"],
-     required: true },
+     required: true, message:'Appointment Time must be in the format 8:00 or 10:00' },
     isSolved:{type: Boolean, default:false},
-    phones: [String],
+    phones: {type:String, maxlength: 14, message:'Phone Number must have at most 14 characters '},
     },
   {
     timestamps: true,

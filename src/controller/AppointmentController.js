@@ -38,7 +38,7 @@ class AppointmentController{
         const{name, cpf, email, birthDate, appDate,appTime, phones}=request.body;
 
             try{
-                const verifyApp = await AppointmentModel.findOne({email});
+                const verifyApp = await AppointmentModel.findOne({email,cpf});
                 if(!verifyApp){
                     const checkDay = await AppointmentModel.findOne({appDate});
                     
@@ -69,9 +69,18 @@ class AppointmentController{
                 }else{
                     return response.status(404).json({message:"email already being used"});
                 }
-            }catch(error){
+            }catch(error){                
+                if (error.name === "ValidationError") {
+                    let errors = {};
+              
+                    Object.keys(error.errors).forEach((key) => {
+                      errors[key] = error.errors[key].message;
+                    });
+                    console.log(errors)
+                    return response.status(400).send({message: JSON.stringify(errors)});
+                  }
                 console.log(error.message);
-                response.status(400).send({message: "An unexpected error happened" });
+                response.status(400).send({message: error.message});
         }
     }
     async remove(request,response){
