@@ -35,7 +35,7 @@ class AppointmentController{
             }
     }
     async store(request,response){
-        const{name, cpf, email, birthDate, appDate,appTime, phones}=request.body;
+        const{name, cpf, email, birthDate, appDate,appTime, report}=request.body;
 
             try{
                 const verifyApp = await AppointmentModel.findOne({email});
@@ -64,8 +64,8 @@ class AppointmentController{
                         birthDate,
                         appDate,
                         appTime,
-                        phones,
                         isSolved:false,
+                        report,
                     });
                     return response.status(200).send({message:"Appointment registred with success", app});
                 }else{
@@ -103,13 +103,14 @@ class AppointmentController{
     }
     async update(request,response){
         const id=request.params.id;
-        const{isSolved}=request.body;
+        const{isSolved, report}=request.body;
         try{
             const verifyApp = await AppointmentModel.findById(id);
             if(verifyApp){
                const app = await AppointmentModel.findByIdAndUpdate(id,
                     {
                         isSolved,
+                        report,
                     },
                     {
                         new:true,

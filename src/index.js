@@ -8,7 +8,6 @@ import helmet from "helmet";
 
 dotenv.config({path:'.env.example'});
 
-import PatientRouter from "./router/PatientRouter.js";
 import AppointmentRouter from "./router/AppointmentRouter.js"
 
 const {DATABASE_URL, PORT} = process.env;
