@@ -39,9 +39,10 @@ class AppointmentController{
 
             try{
                 const verifyApp = await AppointmentModel.findOne({email});
-                if(!verifyApp){
-                    const checkDay = await AppointmentModel.findOne({appDate});
-                    
+                const verifyCpf = await AppointmentModel.findOne({cpf});
+                if(!verifyApp && !verifyCpf){
+                    const checkDay = await AppointmentModel.findOne({appDate:appDate});
+                    console.log({checkDay});
                         //if someone already booked an app this day
                         if(checkDay){
                             console.log(checkDay);
@@ -49,6 +50,7 @@ class AppointmentController{
                             console.log(checkDay.appTime)
                             console.log(appTime);
                             console.log(appTimeNew);
+                            
                             if(appTime===appTimeNew){
                                 return response.status(400).send(
                                     {message:"another appointment is already booked for this day and time"});
@@ -65,13 +67,22 @@ class AppointmentController{
                         phones,
                         isSolved:false,
                     });
-                    response.status(200).send({message:"Appointment registred with success", app});
+                    return response.status(200).send({message:"Appointment registred with success", app});
                 }else{
-                    return response.status(404).json({message:"email already being used"});
+                    return response.status(404).json({message:"email or CPF already being used"});
                 }
-            }catch(error){
+            }catch(error){                
+                if (error.name === "ValidationError") {
+                    let errors = {};
+              
+                    Object.keys(error.errors).forEach((key) => {
+                      errors[key] = error.errors[key].message;
+                    });
+                    console.log(errors)
+                    return response.status(400).send({message: JSON.stringify(errors)});
+                  }
                 console.log(error.message);
-                response.status(400).send({message: "An unexpected error happened" });
+                response.status(400).send({message: error.message});
         }
     }
     async remove(request,response){
