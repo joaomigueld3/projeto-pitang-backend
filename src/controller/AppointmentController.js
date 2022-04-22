@@ -38,10 +38,11 @@ class AppointmentController{
         const{name, cpf, email, birthDate, appDate,appTime, phones}=request.body;
 
             try{
-                const verifyApp = await AppointmentModel.findOne({email,cpf});
-                if(!verifyApp){
-                    const checkDay = await AppointmentModel.findOne({appDate});
-                    
+                const verifyApp = await AppointmentModel.findOne({email});
+                const verifyCpf = await AppointmentModel.findOne({cpf});
+                if(!verifyApp && !verifyCpf){
+                    const checkDay = await AppointmentModel.findOne({appDate:appDate});
+                    console.log({checkDay});
                         //if someone already booked an app this day
                         if(checkDay){
                             console.log(checkDay);
@@ -49,6 +50,7 @@ class AppointmentController{
                             console.log(checkDay.appTime)
                             console.log(appTime);
                             console.log(appTimeNew);
+                            
                             if(appTime===appTimeNew){
                                 return response.status(400).send(
                                     {message:"another appointment is already booked for this day and time"});
@@ -65,9 +67,9 @@ class AppointmentController{
                         phones,
                         isSolved:false,
                     });
-                    response.status(200).send({message:"Appointment registred with success", app});
+                    return response.status(200).send({message:"Appointment registred with success", app});
                 }else{
-                    return response.status(404).json({message:"email already being used"});
+                    return response.status(404).json({message:"email or CPF already being used"});
                 }
             }catch(error){                
                 if (error.name === "ValidationError") {
