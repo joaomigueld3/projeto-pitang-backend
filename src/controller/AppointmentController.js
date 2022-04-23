@@ -140,6 +140,9 @@ class AppointmentController{
         const id=request.params.id;
         const{isSolved, report}=request.body;
         try{
+            if(report.length>30){
+                return response.status(404).send({message: "Report exceeds maximum length of 30"})
+            }
             const verifyApp = await AppointmentModel.findById(id);
             if(verifyApp){
                const app = await AppointmentModel.findByIdAndUpdate(id,
