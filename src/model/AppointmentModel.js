@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import validatorDate from "../validations/validatorDate.js";
+
 
 
 
@@ -9,11 +9,15 @@ const AppointmentSchema = new mongoose.Schema(
     cpf:{type: String, required: true, minlength:11, maxlength:11 , message: 'CPF must be have exactly 11 characters'},
     email: { type: String, required: true, maxlength:30, message:'Max length accepted for EMAIL is 30' },
     birthDate: {type: Date, required: true, max:Date.now()},
-    appDate:{ type: String, required: true, minlength:10, maxlength:10, validate: validatorDate, message:'Appointment Date must be in th format 2022-04-01' },
-    appTime:{ type: String, enum:["8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30",
-  "13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30"],
-     required: true, message:'Appointment Time must be in the format 8:00 or 10:00' },
-    isSolved:{type: Boolean, default:false},
+    appDate:{ type: Date, required: true, 
+      validate:{
+      validator: date=> date>Date.now(),
+      message: props =>`${props.value} error Date, you can't schedule an Appointment to the past.`
+    }},
+    appTime:{ type: String, enum:["08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:30",
+              "13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30"],
+              required: true, message:'Appointment Time must be in the format 08:00 or 10:00' },
+    isSolved:{type: Boolean, default:false, message:"Only true or false are accepted"},
     report: {type:String, default:"",maxlength: 70, message:'Report must have at most 70 characters '},
     },
   {

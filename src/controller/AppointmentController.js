@@ -1,4 +1,7 @@
 import AppointmentModel from "../model/AppointmentModel.js";
+import bubbleSort from "../utils/bubbleSort.js";
+import sortByDate from "../utils/sortByDate.js";
+
 
 class AppointmentController{
 
@@ -8,8 +11,33 @@ class AppointmentController{
             if(app.length==0){
                 return response.status(404).json({message:"No appointments found in database"});
             }
-            else{
-                return response.send(app);
+            else{  
+                const aux=[]
+                for(let i=0; i<app.length; i++){
+                    aux[i]=app[i].appDate;
+                }
+                console.log(aux);
+                //sorted dates
+                bubbleSort(aux);
+                console.log(aux);
+                const aux3=[];
+                // array aux3 with objects sorted by date
+                sortByDate(aux,aux3,app)
+                const aux4=aux3;                               
+                for(var i=0; i<aux3.length; i++){
+                    var datetime = new Date(aux3[i].appDate.toString().slice(0,11) + aux3[i].appTime + 'Z');
+                    console.log(datetime)
+                    aux4[i].appDate=datetime
+                }                
+                console.log(aux4)                
+                const aux5=[];
+                for(let i=0; i<aux4.length; i++){
+                    aux5[i]=aux4[i].appDate;
+                }
+                bubbleSort(aux5)
+                const aux6=[];
+                sortByDate(aux5,aux6,aux4)
+                return response.send(aux6);
             }
             
         }catch(error){
@@ -41,20 +69,27 @@ class AppointmentController{
                 const verifyApp = await AppointmentModel.findOne({email});
                 const verifyCpf = await AppointmentModel.findOne({cpf});
                 if(!verifyApp && !verifyCpf){
-                    const checkDay = await AppointmentModel.findOne({appDate:appDate});
+                    const stringToDate= Date.parse(appDate)
+                    const newDate = new Date(stringToDate)
+                    console.log(appDate)
+                    console.log(stringToDate)
+                    console.log(newDate)
+                    const checkDay = await AppointmentModel.find({appDate: newDate});
                     console.log({checkDay});
                         //if someone already booked an app this day
                         if(checkDay){
+                            for(let i=0; i<checkDay.length;i++){
                             console.log(checkDay);
-                            const appTimeNew=checkDay.appTime;
-                            console.log(checkDay.appTime)
+                            const appTimeNew=checkDay[i].appTime;
+                            console.log(checkDay[i].appTime)
                             console.log(appTime);
                             console.log(appTimeNew);
-                            
                             if(appTime===appTimeNew){
                                 return response.status(400).send(
                                     {message:"another appointment is already booked for this day and time"});
                             }
+                            }
+                            
                         }
                     
                     const app = await AppointmentModel.create({
@@ -121,8 +156,8 @@ class AppointmentController{
             }
         }catch(error){
             console.log(error.message);
-            response.status(400).send({ message: "An unexpected error happened" });
-        }
+            response.status(400).send({message: error.message});
+    }
     }
 }
 
