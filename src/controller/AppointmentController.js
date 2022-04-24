@@ -23,7 +23,7 @@ class AppointmentController {
       sortByDate(aux, aux3, app);
       const aux4 = aux3;
       for (let i = 0; i < aux3.length; i++) {
-        const datetime = new Date(`${aux3[i].appDate.toString().slice(0, 11) + aux3[i].appTime}Z`);
+        const datetime = new Date(`${aux3[i].appDate.toISOString().slice(0, 11) + aux3[i].appTime}Z`);
         console.log(datetime);
         aux4[i].appDate = datetime;
       }
