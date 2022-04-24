@@ -7,7 +7,7 @@ const AppointmentSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, maxlength: [50, 'Max length accepted for NAME is 50' ]},
     cpf:{type: String, required: true, minlength:11, maxlength:11 , message: 'CPF must be have exactly 11 characters'},
-    email: { type: String, required: true, maxlength:[20, 'Max length accepted for EMAIL is 20'] },
+    email: { type: String, required: true, maxlength:[30, 'Max length accepted for EMAIL is 30'] },
     birthDate: {type: Date, required: true, max:Date.now()},
     appDate:{ type: Date, required: true, 
       validate:{
