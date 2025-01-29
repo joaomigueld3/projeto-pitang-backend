@@ -1,18 +1,65 @@
-# projeto-pitang-backend
+# Vaccination appointment project API
 
-Backend application developed with node.js
-Funcionalities and features
+Project in branch 'master'
 
-To start the application create a db and a collection in mongodb
-run 'yarn dev'
-Enviroment variables: 'PORT' and 'DATABASE_URL'
+## 📌 Overview  
+Backend application built with **Node.js**, providing an API for appointment management.
 
-API Rest using Express, Middlewares
-Database: mongodb
-Schema, CRUD and validations with Mongoose
-Resquests: GET, POST, PUT, DELETE
-POST: receives data from the body and validates all 'required' variables: (name, email, cpf, birthDate, appDate, appTime) checks if there isn't another 'email' and 'cpf' already registred in database, also checks if there isn't another 'Appointment' for that 'appDate' and 'appTime'
-'isSolved' and 'report' aren't required.
-PUT: receives an 'id' from params, and 'isSolved','report' from the body, if the 'id' exists in the db the user can update 'isSolved' and 'report'
-DELETE: receives an 'id' from params, if exists, removes the 'Appointment' 
-GET: '/api/appointment' lists all 'Appointments' from the db and lists them by dateAndTime
+---
+
+## 🚀 Installation & Setup  
+
+### 1️⃣ Prerequisites  
+- Install **Node.js** and **Yarn**  
+- Set up a **MongoDB database** with a collection
+
+### 2️⃣ Clone the Repository  
+```sh
+git clone https://github.com/your-username/projeto-pitang-backend.git
+cd projeto-pitang-backend
+```
+
+### 3️⃣ Install Dependencies
+```sh
+yarn install
+```
+
+### 4️⃣ Configure Environment Variables
+#### Create a .env file with:
+```sh
+PORT=your_port
+DATABASE_URL=your_mongodb_connection_string
+```
+### 5️⃣ Run the Application
+```sh
+yarn dev
+```
+
+## 🛠 Features
+### 🔹 API REST with Express  
+✔ Middleware-based architecture  
+✔ CRUD operations using Mongoose  
+✔ Validation & unique constraints for key fields  
+
+## 🔹 Appointment Management
+| Method | Route | Description |
+|----------|----------|----------|
+| GET    | 	`/api/appointment`   | Lists all appointments, sorted by date/time   |
+| POST    | `/api/appointment`   | Creates a new appointment (validates required fields)  |
+| PUT    | `/api/appointment/:id`   | Updates isSolved and report (body) if appointment exists   |
+| DELETE    | `/api/appointment/:id`   | Deletes an appointment by ID   |
+
+## 🔹 Validation Rules
+Required fields: name, email, CPF, birthDate, appDate, appTime  
+Unique constraints:  
+    ✔ email and CPF must be unique  
+    ✔ appDate and appTime cannot be duplicated for another appointment  
+
+## 🏗 Tech Stack
+✅ Node.js – Backend runtime  
+✅ Yarn – Dependency management  
+✅ Express.js – Web framework  
+✅ MongoDB – NoSQL database  
+✅ Mongoose – Schema & validation  
+✅ Json Web Token (JWT) – Authentication  
+
