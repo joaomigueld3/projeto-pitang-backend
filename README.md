@@ -1,4 +1,4 @@
-# projeto-pitang-backend
+# Vaccination appointment project API
 
 Project in branch 'master'
 
