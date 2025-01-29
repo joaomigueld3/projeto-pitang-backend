@@ -15,8 +15,8 @@ Backend application built with **Node.js**, providing an API for appointment man
 
 ### 2️⃣ Clone the Repository  
 ```sh
-git clone https://github.com/your-username/projeto-pitang-backend.git
-cd projeto-pitang-backend
+git clone https://github.com/your-username/vaccination-app-back.git
+cd vaccination-app-back
 ```
 
 ### 3️⃣ Install Dependencies
