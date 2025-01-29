@@ -7,6 +7,14 @@ Backend application built with **Node.js**, providing an API for appointment man
 
 ---
 
+## 🏗 Tech Stack
+<img align="center" alt="Joao-Node" height="30" width="40" src="https://skillicons.dev/icons?i=nodejs&theme=light"> Node.js – Backend runtime  
+<img align="center" alt="Joao-Yarn" height="30" width="40" src="https://skillicons.dev/icons?i=yarn&theme=light"> Yarn – Dependency management  
+<img align="center" alt="Joao-Express" height="30" width="40" src="https://skillicons.dev/icons?i=express&theme=light"> Express.js – Web framework  
+<img align="center" alt="Joao-Mongo" height="30" width="40" src="https://skillicons.dev/icons?i=mongodb&theme=light"> MongoDB – NoSQL database  
+Mongoose – Schema & validation  
+Json Web Token (JWT) – Authentication  
+
 ## 🚀 Installation & Setup  
 
 ### 1️⃣ Prerequisites  
@@ -54,12 +62,3 @@ Required fields: name, email, CPF, birthDate, appDate, appTime
 Unique constraints:  
     ✔ email and CPF must be unique  
     ✔ appDate and appTime cannot be duplicated for another appointment  
-
-## 🏗 Tech Stack
-✅ Node.js – Backend runtime  
-✅ Yarn – Dependency management  
-✅ Express.js – Web framework  
-✅ MongoDB – NoSQL database  
-✅ Mongoose – Schema & validation  
-✅ Json Web Token (JWT) – Authentication  
-
