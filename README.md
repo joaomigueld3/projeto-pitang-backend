@@ -2,8 +2,6 @@
 
 Project in branch 'master'
 
-# projeto-pitang-backend
-
 ## 📌 Overview  
 Backend application built with **Node.js**, providing an API for appointment management.
 
